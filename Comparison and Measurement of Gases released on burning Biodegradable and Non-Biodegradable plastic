@@ -1,0 +1,39 @@
+const int SENSOR135 = A0;
+const int SENSOR7 = A1;
+int sensorValue1;
+int sensorValue2;
+float ppm1;
+float ppm2;
+int dt = 1000;
+
+void setup() {
+  // Initialize serial communication
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read sensor data
+  sensorValue1 = analogRead(SENSOR135);
+  sensorValue2 = analogRead(SENSOR7);  
+  // Convert sensor value to VOC concentration
+  ppm1 = convertToPPM(sensorValue1);
+  ppm2 = convertToPPM(sensorValue2);
+  
+  // Output data to serial monitor
+  Serial.print("VOC Concentration (PPM): ");
+  Serial.println(ppm1);
+  
+  Serial.print("CO Concentration (PPM): ");
+  Serial.println(ppm2);
+   
+
+  delay(dt); // Delay for stability
+}
+
+// Function to convert sensor value to VOC concentration (in PPM)
+float convertToPPM(int sensorValue) {
+  // Example conversion formula
+  // This should be calibrated according to the specifications of your sensor
+  float ppm = sensorValue / 10.0; // Example conversion, adjust according to sensor specifications
+  return ppm;
+}
